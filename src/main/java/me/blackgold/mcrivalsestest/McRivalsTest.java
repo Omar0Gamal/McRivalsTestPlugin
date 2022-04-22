@@ -118,7 +118,7 @@ public final class McRivalsTest extends JavaPlugin implements Listener {
                 Player player = (Player) entity.getKiller();
                 UpdatePlayer(player);
 
-                player.sendMessage("Your coins are: " + getCoins(player));
+                player.sendMessage("Your coins are: " + getCoins(player) + 5);
             }
         }
     }
