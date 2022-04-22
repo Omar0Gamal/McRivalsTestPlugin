@@ -48,7 +48,7 @@ public final class McRivalsTest extends JavaPlugin implements Listener {
     public void createCoinsTable(){
         try(Connection connection = hikari.getConnection();
             Statement statement = connection.createStatement();){
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Coins(UUID varchar(36), name VARCHAR(16), COINS int)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Coins(UUID varchar(36), name VARCHAR(16), COINS int, PRIMARY KEY (UUID))");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public final class McRivalsTest extends JavaPlugin implements Listener {
 
     public void InitPlayer(Player player){
         try (Connection connection = hikari.getConnection()){
-             PreparedStatement insert = connection.prepareStatement("INSERT INTO Coins VALUES(?,?,?) ON DUPLICATE KEY UPDATE name=?");
+             PreparedStatement insert = connection.prepareStatement("INSERT IGNORE INTO Coins VALUES(?,?,?) ON DUPLICATE KEY UPDATE name=?");
              insert.setString(1, player.getUniqueId().toString());
              insert.setString(2, player.getName());
              insert.setInt(3, 0);
@@ -117,8 +117,8 @@ public final class McRivalsTest extends JavaPlugin implements Listener {
 
                 Player player = (Player) entity.getKiller();
                 UpdatePlayer(player);
-
-                player.sendMessage("Your coins are: " + getCoins(player) + 5);
+                int coins = getCoins(player) + 5;
+                player.sendMessage("Your coins are: " + coins);
             }
         }
     }
