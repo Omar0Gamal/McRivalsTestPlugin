@@ -1,0 +1,6 @@
+name: McRivalsTest
+version: '${project.version}'
+main: me.blackgold.mcrivalsestest.McRivalsTest
+api-version: 1.18
+authors: [ BlackGold ]
+description: Test plugin for McRivals
